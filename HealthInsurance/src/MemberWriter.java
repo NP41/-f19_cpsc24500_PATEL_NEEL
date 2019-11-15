@@ -1,6 +1,6 @@
 /**This class will be useful for writing out data of members from ArrayList to different file formats, 
  * i.e. text, binary and XML.
- * 
+ * @author NP
  */
 // Required import packages
 import java.beans.XMLEncoder;
@@ -14,20 +14,28 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 public class MemberWriter {
 	
-	// this function will print members from file to the screen with formatting.
+/** this function will print members from file to the screen with formatting.
+ * 
+ * @param memberData
+ */
 	public static void printMembers(ArrayList<Health> memberData) {
 		for (Health h: memberData) {
 		
 		System.out.println(h);
 	}
 	}
-// This function will save member data from ArrayList to the text file in tab delimited file format.
+/** This function will save member data from ArrayList to the text file in tab delimited file format.
+ * 
+ * @param fname
+ * @param memberData
+ * @return
+ */
 	public static boolean saveMembertoText(String fname, ArrayList<Health> memberData) 
 	{
 		
 		    try 
 				{
-// PrintWriter used to stored data into text file
+// PrintWriter used to stored data into text file with tab-delimited file format.
 			PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File(fname))));
 			
 			for (Health m:memberData) // iterate through the ArrayList  
@@ -43,7 +51,12 @@ public class MemberWriter {
 			      return false;
 		        }
 	}
-// This function will save member data from ArrayList into BinaryFile format
+/** This function will save member data from ArrayList into BinaryFile format
+ * 
+ * @param fname
+ * @param memberData
+ * @return
+ */
 	public static boolean saveMembertoBinary(String fname, ArrayList<Health> memberData) 
     {
 		    try {  
@@ -58,7 +71,12 @@ public class MemberWriter {
 	              return false; 
             }
     }
-// This function will save members in Array List in a XML file format
+/** This function will save members in Array List in a XML file format
+ * 
+ * @param fname
+ * @param memberData
+ * @return
+ */
     public static boolean saveStudentsToXML(String fname, ArrayList<Health> memberData ) 
     {
             try {
@@ -72,7 +90,6 @@ public class MemberWriter {
                 return false;
             }
         }
-  
     }
 
 
