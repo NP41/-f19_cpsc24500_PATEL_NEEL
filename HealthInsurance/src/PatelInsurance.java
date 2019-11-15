@@ -51,21 +51,21 @@ public static void addMember(ArrayList<Health> memberData) {
 	String fname,lname,age,weight,height,bpSys,bpDias,cancer, diabetes, alzheimers;
 	
 	Health hlt;
-// getting user inputs for various data for member
+// getting user inputs for various data for member and trimming unwanted leading and trailing spaces in user entry.
 	System.out.print("Enter firstname:");
-	fname = sc.nextLine();
+	fname = sc.nextLine().trim();
 	
 	System.out.print("Enter lastname:");
-	lname = sc.nextLine();
+	lname = sc.nextLine().trim();
 	
 	System.out.print("Enter age:");
-	age= sc.nextLine();
+	age= sc.nextLine().trim();
 	
 	System.out.print("Enter height in inches:");
-	height = sc.nextLine();
+	height = sc.nextLine().trim();
 	
 	System.out.print("Enter weight in pounds:");
-	weight = sc.nextLine();
+	weight = sc.nextLine().trim();
 	
 	System.out.print("Enter Blood Pressure (Sys and Dias):");
 	bpSys= sc.nextLine();
@@ -75,13 +75,13 @@ public static void addMember(ArrayList<Health> memberData) {
 	
 	System.out.println("\nHas a family member had....");
     System.out.print("Cancer (y or n):");
-    cancer = sc.nextLine();
+    cancer = sc.nextLine().trim();
     
     System.out.print("Diabetes (y or n):");
-    diabetes = sc.nextLine();
+    diabetes = sc.nextLine().trim();
     
     System.out.print("Alzheimers (y or n):");
-    alzheimers = sc.nextLine();
+    alzheimers = sc.nextLine().trim();
 	
 	// add the health to the array of memory 
 	hlt = new Health(fname,lname,age,height, weight,bpSys, bpDias, cancer, diabetes, alzheimers );
@@ -96,7 +96,7 @@ public static void main (String[] args) {
 	String fname;
 	int choice;
 	String type;
-	
+try {	
 	Scanner sc = new Scanner(System.in);
 	welcome();  // call welcome function to greet user
 	
@@ -104,6 +104,9 @@ public static void main (String[] args) {
 	fname = sc.next();
 	ArrayList<Health> memberData = MemberReader.insuranceFileReader(fname);  // call the insurance file reader to read data from file
 	
+	// call the memberScoreAssessor function from Assessor class, it will be required to write risk assessment to JSON file
+		ArrayList<InsuranceScore> assessment = Assessor.memberScoreAsessor(memberData);
+		
 	if (memberData==null)  // If file is not read, print following message and quit
 	{
 		System.out.println("ooooooops! I was not able to read the file correcly!");
@@ -131,10 +134,10 @@ public static void main (String[] args) {
 	{
 		addMember(memberData); // call the addMember function
 	}
-	/*
-	 * If user chooses option 3, this will allow them to store the data from the ArrayList into Text, Binary or XML file format.	
-	 */
-		else if (choice==3)
+/*
+ * If user chooses option 3, this will allow them to store the data from the ArrayList into Text, Binary or XML file format.	
+ */
+	else if (choice==3)
 		{
 			System.out.print("(T)ext, (B)inary, or (X)ML? ");
 			type = sc.next();
@@ -242,18 +245,34 @@ public static void main (String[] args) {
 				}
 			}
 		}
-		
+/*
+ * IF user chooses option 5, member risk assessment will be printed to screen in formated way.  		
+ */
 		else if (choice==5) 
 		{
+			System.out.println("Here are the insurance assessments:");
 			
+			for (InsuranceScore ins: Assessor.memberScoreAsessor(memberData)) 
+			{
+				System.out.print(ins);
+			}
 		}
-			
-		
+/*
+ * IF user chooses option 6, the member risk assessment will be stored in JSON file format.			
+ */
 		else if (choice==6) 
 		{
-			
+			System.out.print("Enter JSON output file name:");
+			fname = sc.next();
+      // if file is written successfully in JSON file format, let user know of success, else print failure.
+			if (InsuranceScoreWriter.writeMembersToJSON(fname, assessment)) {
+				System.out.println("Members were written successfully!");
+			}
+			else 
+			{
+				System.out.println("Yu lose");
+			}
 		}
-		
 		} 
 			while(choice!= 7 ); // if user chooses option 7, print good bye message and quit.
 		{
@@ -264,7 +283,10 @@ public static void main (String[] args) {
 			System.out.println("Thank you for using this tool! I hope it was ");
 			System.out.println("helpful. Please feel free to provide any feedback.");
 		}
-		
 	}
+	} catch (Exception ex) // end try-catch block
+      {
+		System.out.println("ERROR 404! Something Went Wrong! Please try again.");	
+      }
 	}
 	}
