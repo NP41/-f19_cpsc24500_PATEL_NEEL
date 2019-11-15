@@ -26,7 +26,7 @@ public static void welcome() {
 	System.out.println("shared on a web-based data exchange.");
 	System.out.println("****************************************");
 }
-/*
+/**
  * This Show Menu function will print list of options that user can choose from.
  */
 public static void showMenu() {
@@ -40,7 +40,7 @@ public static void showMenu() {
 	System.out.println("  7. Exit");
 	System.out.print("Please enter your choice: ");
 }
-/*
+/**
  * 	This addMember function will allow the user to enter a new member.
  */
 public static void addMember(ArrayList<Health> memberData) {
@@ -51,7 +51,7 @@ public static void addMember(ArrayList<Health> memberData) {
 	String fname,lname,age,weight,height,bpSys,bpDias,cancer, diabetes, alzheimers;
 	
 	Health hlt;
-// getting user unputs for various data for member
+// getting user inputs for various data for member
 	System.out.print("Enter firstname:");
 	fname = sc.nextLine();
 	
@@ -90,10 +90,6 @@ public static void addMember(ArrayList<Health> memberData) {
 	System.out.println("\nNew member has been added.");
 }
 /*
- * This risk Assessor function will assess the riskLevel and provide the verdict based on assigned penalty points
- */
-
-/*
  * Begin Main function ...
  */
 public static void main (String[] args) {
@@ -114,7 +110,6 @@ public static void main (String[] args) {
 	}
 	
 	else {
-		
 		
 		do {
 			
@@ -148,7 +143,7 @@ public static void main (String[] args) {
 			{
 				System.out.print("Enter name of the output file: ");
 				fname = sc.next();
-	// 
+	// IF file is written successfully, print success else let user know of failure. 
 				if (MemberWriter.saveMembertoText(fname, memberData)) 
 				{
 					System.out.println("Members were written successfully!");
@@ -189,7 +184,63 @@ public static void main (String[] args) {
 	 */
 		else if (choice==4) 
 		{
-		
+			// ask users for options to select Text, Binary or Xml
+			System.out.print("(T)ext, (B)inary, or (X)ML? ");
+			type = sc.next();
+			
+	// if user chooses B, they will be allowed to enter name of binary file and number of members in file will be be printed on screen 
+			if (type.contentEquals("B") || type.contentEquals("b")) 
+			{
+				System.out.print("Enter name of the input file: ");
+				fname = sc.next();
+	// calling the readBackBinary function  from MemberReader class to read file and get total members in file	
+			ArrayList<Health> readBackBinary = MemberReader.readMemberDataFromBinary(fname);
+			
+			if (readBackBinary == null) // if file can't be read, print the following message else, print the number of members read
+			{
+				System.out.println("Sorry! I wasn't able to read the file!");
+			}
+			else 
+			{
+				System.out.println(readBackBinary.size()+" members were read.");
+			}
+			}
+	// if user chooses X, they will be allowed to enter name of Xml file and number of members in file will be be printed on screen 
+			else if (type.contentEquals("X") || type.contentEquals("x"))
+			{
+				System.out.print("Enter name of the input file: ");
+				fname = sc.next();
+				
+	// calling the readBackXml function  from MemberReader class to read file and get total members in file		
+			ArrayList<Health> readBackXml = MemberReader.readMemberDataFromXml(fname);
+			
+			if (readBackXml==null) // if file can't be read, print the following message else, print the number of members read
+			{
+				System.out.println("Sorry! I wasn't able to read the file!");
+			}
+			else 
+			{
+				System.out.println(readBackXml.size() +" members were read.");
+			}
+			}
+	// if user chooses T, they will be allowed to enter name of text file and number of members in file will be be printed on screen 		
+			else if (type.equals("T") || type.equals("t"))
+			{
+				System.out.print("Enter name of the input file: ");
+				fname = sc.next();
+				
+	// calling the readBackText function from MemberReader class to read file and get total members in file	
+				ArrayList<Health> readBackText = MemberReader.insuranceFileReader(fname);
+				
+				if (readBackText== null) // if file can't be read, print the following message else, print the number of members read
+				{
+					System.out.println("Sorry! I wasn't able to read the file!");
+				}
+				else 
+				{
+					System.out.println(readBackText.size() + " members were read.");
+				}
+			}
 		}
 		
 		else if (choice==5) 
@@ -206,12 +257,12 @@ public static void main (String[] args) {
 		} 
 			while(choice!= 7 ); // if user chooses option 7, print good bye message and quit.
 		{
-			System.out.println("*********************************************");
+			System.out.println("*************************************************");
 			System.out.println("           INSURANCE SCORE CARD");
 			System.out.println("                THANK YOU");
-			System.out.println("*********************************************");
-			System.out.println("Thank you for using this tool! I hope it was helpful.");
-			System.out.println("Please feel free to suggest any feedback.");
+			System.out.println("*************************************************");
+			System.out.println("Thank you for using this tool! I hope it was ");
+			System.out.println("helpful. Please feel free to provide any feedback.");
 		}
 		
 	}
