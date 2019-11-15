@@ -3,20 +3,27 @@
  * @author NP
  *
  */
+import java.io.Serializable;
 
-public class Health {
+//class enabled to handle serialization for binary and XML files. 
+public class Health implements Serializable {
+	
+	// declaring variables
 	    private  String fname;
 	    private  String lname;
-	    private  String age;
-	    private  String height;
-	    private  String weight;
-	    private  String bpSystolic;
-	    private  String bpDiastolic;
-	    private  String cancer;
-	    private  String diabetes;
-	    private  String alzheimers;
+	    private   int age;
+	    private   int height;
+	    private   int weight;
+	    private   int bpSystolic;
+	    private   int bpDiastolic;
+	    private   String cancer;
+	    private   String diabetes;
+	    private   String alzheimers;
 	    
-	    // Health constructor to store data from text file to a string
+/** Getters and Setters used to access data
+ * 
+ * @return
+ */
 	    public String getFname() {
 			return fname;
 		}
@@ -33,47 +40,47 @@ public class Health {
 			this.lname = lname;
 		}
 
-		public String getAge() {
+		public  int getAge() {
 			return age;
 		}
 
-		public void setAge(String age) {
+		public void setAge(int age) {
 			this.age = age;
 		}
 
-		public String getHeight() {
+		public int getHeight() {
 			return height;
 		}
 
-		public void setHeight(String height) {
+		public void setHeight(int height) {
 			this.height = height;
 		}
 
-		public String getWeight() {
+		public  int getWeight() {
 			return weight;
 		}
 
-		public void setWeight(String weight) {
+		public void setWeight(int weight) {
 			this.weight = weight;
 		}
 
-		public String getBpSystolic() {
+		public  int getBpSystolic() {
 			return bpSystolic;
 		}
 
-		public void setBpSystolic(String bpSystolic) {
+		public void setBpSystolic(int bpSystolic) {
 			this.bpSystolic = bpSystolic;
 		}
 
-		public String getBpDiastolic() {
+		public  int getBpDiastolic() {
 			return bpDiastolic;
 		}
 
-		public void setBpDiastolic(String bpDiastolic) {
+		public void setBpDiastolic(int bpDiastolic) {
 			this.bpDiastolic = bpDiastolic;
 		}
 
-		public String getCancer() {
+		public  String getCancer() {
 			return cancer;
 		}
 
@@ -81,7 +88,7 @@ public class Health {
 			this.cancer = cancer;
 		}
 
-		public String getDiabetes() {
+		public  String getDiabetes() {
 			return diabetes;
 		}
 
@@ -89,34 +96,64 @@ public class Health {
 			this.diabetes = diabetes;
 		}
 
-		public String getAlzheimers() {
-			return alzheimers;
+		public  String getAlzheimers() {
+			return alzheimers; 
 		}
 
 		public void setAlzheimers(String alzheimers) {
-			this.alzheimers = alzheimers;
+		    this.alzheimers = alzheimers;
 		}
-
+		
+		/**
+		 * This is a required default constructor to handle the Xml serialization.
+		 */
+		public Health () {
+			fname ="";
+			lname ="";
+			age =0;
+			height=0;
+			weight=0;
+			bpSystolic=0;
+			bpDiastolic=0;
+			cancer="";
+			diabetes="";
+			alzheimers="";
+			
+		}
+/** Constructor used to set the values 
+ * 
+ * @param fname
+ * @param lname
+ * @param age
+ * @param height
+ * @param weight
+ * @param bpSystolic
+ * @param bpDiastolic
+ * @param cancer
+ * @param diabetes
+ * @param alzheimers
+ */
 		public Health(String fname, String lname, String age, String height, String weight, String bpSystolic, String bpDiastolic, String cancer, 
 				String diabetes, String alzheimers ){
 	    	
 	    	setLname(lname);
 	    	setFname(fname);
-	    	setAge(age);
-	    	setHeight(height);
-	    	setWeight(weight);
-	    	setBpSystolic(bpSystolic);
-	    	setBpDiastolic(bpDiastolic);
+	    	setAge(Integer.parseInt(age));
+	    	setHeight(Integer.parseInt(height));
+	    	setWeight(Integer.parseInt(weight));
+	    	setBpSystolic(Integer.parseInt(bpSystolic));
+	    	setBpDiastolic(Integer.parseInt(bpDiastolic));
 	    	setCancer(cancer);
 	    	setDiabetes(diabetes);
 	    	setAlzheimers(alzheimers);
 	    	
 	    }
-	    
+		
 @Override
+// toString function will print the data from arrayList into customized format
 public String toString() {
 	
-	String result = String.format(" %s, %s\n Age %10s \n Height %7s in\n Weight %7s lbs\n BP Syst %6s\n BP Dias %6s\n Cancer %7s\n Diabetes %5s\n "
+	String result = String.format("%s, %s\n Age %10s \n Height %7s in\n Weight %7s lbs\n BP Syst %6s\n BP Dias %6s\n Cancer %7s\n Diabetes %5s\n "
 			+ "Alzheimers %3s\n "
 			+ "----------------------", 
 			lname, fname, age, height, weight, bpSystolic, bpDiastolic, cancer, diabetes, alzheimers);
@@ -124,5 +161,4 @@ public String toString() {
     return result;         
 	
 }
-
 }
