@@ -58,7 +58,7 @@ public class MemberReader {
 			try {
 // Object input stream will be used to read the binary file			
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fname));
-				
+		// Object Input Stream does not return an arrayList, so we need to typecast it as ArrayList<Health>.	
 				ArrayList <Health> result = (ArrayList<Health>)ois.readObject();
 				ois.close();
 				
@@ -78,6 +78,7 @@ public class MemberReader {
 			try {
 // XML decoder used to read the xml file into simple text
 				XMLDecoder xml = new XMLDecoder(new BufferedInputStream(new FileInputStream(fname)));
+		// XML decoder does not return an arrayList, so we need to typecast it as ArrayList<Health>.
 				ArrayList <Health> result = (ArrayList<Health>)xml.readObject();
 				xml.close();
 				return result;
